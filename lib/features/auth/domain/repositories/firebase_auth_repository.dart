@@ -58,7 +58,6 @@ class FirebaseAuthRepository implements AuthRepository {
     required UserRole role,
   }) async {
     try {
-      // Check if username is available
       final usernameCheck = await isUsernameAvailable(username);
       if (usernameCheck.isLeft()) {
         return usernameCheck.fold(
@@ -72,7 +71,6 @@ class FirebaseAuthRepository implements AuthRepository {
         return const Left(AuthFailure.usernameAlreadyTaken());
       }
 
-      // Create Firebase Auth user
       final result = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -82,7 +80,6 @@ class FirebaseAuthRepository implements AuthRepository {
         return const Left(AuthFailure.serverError('Failed to create user'));
       }
 
-      // Create user document in Firestore
       final now = DateTime.now();
       final userData = {
         'email': email,
