@@ -82,10 +82,6 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     });
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Lupa Password'),
-        automaticallyImplyLeading: false,
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
