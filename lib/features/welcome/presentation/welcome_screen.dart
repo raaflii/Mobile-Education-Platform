@@ -14,7 +14,7 @@ class WelcomeScreen extends ConsumerWidget {
       // Konfigurasi global
       globalBackgroundColor: theme.colorScheme.surface,
       allowImplicitScrolling: true,
-      autoScrollDuration: null, // Disable auto scroll
+      autoScrollDuration: null,
       infiniteAutoScroll: false,
 
       pages: [
@@ -54,7 +54,6 @@ class WelcomeScreen extends ConsumerWidget {
       showNextButton: false,
       showDoneButton: false,
 
-      // Dots indicator styling
       dotsDecorator: DotsDecorator(
         size: const Size(10.0, 10.0),
         color: theme.colorScheme.primary.withOpacity(0.3),
@@ -63,13 +62,13 @@ class WelcomeScreen extends ConsumerWidget {
         activeShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25.0),
         ),
-        spacing: const EdgeInsets.symmetric(horizontal: 4.0),
+        spacing: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
       ),
 
       curve: Curves.easeInOut,
       animationDuration: 300,
 
-      onDone: () {}, 
+      onDone: () {},
     );
   }
 
@@ -144,14 +143,6 @@ class WelcomeScreen extends ConsumerWidget {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.primary.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(25),
-              border: Border.all(
-                color: theme.colorScheme.primary.withOpacity(0.2),
-                width: 1,
-              ),
-            ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
