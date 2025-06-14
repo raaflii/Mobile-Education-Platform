@@ -35,7 +35,6 @@ final routerProvider = Provider<GoRouter>((ref) {
       final isSplashPage = state.uri.toString() == '/splash';
       final isWelcomePage = state.uri.toString() == '/welcome';
 
-      // If not logged in and not on auth pages, go to login
       if (!isLoggedIn &&
           !isLoginPage &&
           !isRegisterPage &&
@@ -45,7 +44,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         return '/welcome';
       }
 
-      // If logged in and on auth pages, redirect to dashboard
       if (isLoggedIn &&
           (isLoginPage ||
               isRegisterPage ||
