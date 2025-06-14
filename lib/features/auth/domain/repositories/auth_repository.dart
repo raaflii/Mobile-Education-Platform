@@ -15,6 +15,8 @@ abstract class AuthRepository {
     required String username,
     required UserRole role,
   });
+
+  Future<Either<AuthFailure, User>> signInWithGoogle();
   
   Future<Either<AuthFailure, Unit>> sendPasswordResetEmail({
     required String email,
