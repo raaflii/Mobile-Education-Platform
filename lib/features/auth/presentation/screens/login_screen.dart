@@ -269,8 +269,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     children: [
                       Image.network(
                         'https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw',
-                        width: 18,
-                        height: 18,
+                        width: 17,
+                        height: 17,
                         fit: BoxFit.cover,
                       ),
                       const SizedBox(width: 16),
