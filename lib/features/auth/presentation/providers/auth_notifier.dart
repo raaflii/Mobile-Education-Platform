@@ -20,17 +20,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   AuthNotifier(this._authRepository) : super(const AuthState.initial());
 
-  Future<void> signIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> signIn({required String email, required String password}) async {
     state = const AuthState.loading();
-    
+
     final result = await _authRepository.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
-    
+
     result.fold(
       (failure) => state = AuthState.failure(failure),
       (user) => state = AuthState.success(user),
@@ -44,13 +41,24 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required UserRole role,
   }) async {
     state = const AuthState.loading();
-    
+
     final result = await _authRepository.signUpWithEmailAndPassword(
       email: email,
       password: password,
       username: username,
       role: role,
     );
+
+    result.fold(
+      (failure) => state = AuthState.failure(failure),
+      (user) => state = AuthState.success(user),
+    );
+  }
+
+  Future<void> signInWithGoogle() async {
+    state = const AuthState.loading();
+    
+    final result = await _authRepository.signInWithGoogle();
     
     result.fold(
       (failure) => state = AuthState.failure(failure),
@@ -58,13 +66,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
     );
   }
 
-  Future<void> sendPasswordResetEmail({
-    required String email,
-  }) async {
+  Future<void> sendPasswordResetEmail({required String email}) async {
     state = const AuthState.loading();
-    
+
     final result = await _authRepository.sendPasswordResetEmail(email: email);
-    
+
     result.fold(
       (failure) => state = AuthState.failure(failure),
       (_) => state = const AuthState.initial(),
@@ -73,9 +79,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> signOut() async {
     state = const AuthState.loading();
-    
+
     final result = await _authRepository.signOut();
-    
+
     result.fold(
       (failure) => state = AuthState.failure(failure),
       (_) => state = const AuthState.initial(),
@@ -84,15 +90,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<bool> isUsernameAvailable(String username) async {
     final result = await _authRepository.isUsernameAvailable(username);
-    return result.fold(
-      (failure) => false,
-      (isAvailable) => isAvailable,
-    );
+    return result.fold((failure) => false, (isAvailable) => isAvailable);
   }
 }
 
 // Provider for AuthNotifier
-final authNotifierProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
+final authNotifierProvider = StateNotifierProvider<AuthNotifier, AuthState>((
+  ref,
+) {
   final authRepository = ref.watch(authRepositoryProvider);
   return AuthNotifier(authRepository);
 });
