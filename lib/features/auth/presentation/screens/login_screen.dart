@@ -38,6 +38,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
+  Future<void> _handleGoogleSignIn() async {
+    ref.read(authNotifierProvider.notifier).signInWithGoogle();
+  }
+
   String _getErrorMessage(AuthFailure failure) {
     return failure.when(
       serverError: (message) => message ?? 'Server error occurred',
@@ -265,11 +269,30 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // Register Button
+                OutlinedButton.icon(
+                  onPressed: authState.maybeWhen(
+                    loading: () => null,
+                    orElse: () => _handleGoogleSignIn,
+                  ),
+                  icon: authState.maybeWhen(
+                    loading: () => const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                    orElse: () => Image.asset(
+                      'assets/images/google-logo.png',
+                      height: 18,
+                      width: 18,
+                    ),
+                  ),
+                  label: const Text('Masuk dengan Google'),
+                ),
+                const SizedBox(height: 16),
+
                 OutlinedButton(
                   onPressed: () {
                     context.push('/register');
-                    ;
                   },
                   child: const Text('Belum punya akun? Daftar'),
                 ),
