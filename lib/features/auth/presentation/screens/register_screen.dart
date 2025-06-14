@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile_education_platform/features/auth/domain/entitites/user.dart';
 import '../providers/auth_notifier.dart';
 import '../../domain/failures/auth_failure.dart';
@@ -117,7 +118,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Title
                     Text(
                       'Buat Akun Baru',
                       style: Theme.of(context).textTheme.displaySmall,
@@ -323,7 +323,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Navigator.of(context).pop();
+                                  context.push('/login');
                                 },
                             ),
                           ],
