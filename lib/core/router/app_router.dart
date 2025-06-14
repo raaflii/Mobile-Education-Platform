@@ -9,6 +9,8 @@ import 'package:mobile_education_platform/features/auth/presentation/screens/for
 
 import 'package:mobile_education_platform/features/splash/presentation/splash_screen.dart';
 
+import 'package:mobile_education_platform/features/welcome/presentation/welcome_screen.dart';
+
 import 'package:mobile_education_platform/features/dashboard/presentation/screens/teacher_dashboard_screen.dart';
 import 'package:mobile_education_platform/features/dashboard/presentation/screens/student_dashboard_screen.dart';
 
@@ -31,14 +33,16 @@ final routerProvider = Provider<GoRouter>((ref) {
       final isRegisterPage = state.uri.toString() == '/register';
       final isForgotPasswordPage = state.uri.toString() == '/forgot-password';
       final isSplashPage = state.uri.toString() == '/splash';
+      final isWelcomePage = state.uri.toString() == '/welcome';
 
       // If not logged in and not on auth pages, go to login
       if (!isLoggedIn &&
           !isLoginPage &&
           !isRegisterPage &&
           !isForgotPasswordPage &&
-          !isSplashPage) {
-        return '/login';
+          !isSplashPage &&
+          !isWelcomePage) {
+        return '/welcome';
       }
 
       // If logged in and on auth pages, redirect to dashboard
@@ -46,7 +50,8 @@ final routerProvider = Provider<GoRouter>((ref) {
           (isLoginPage ||
               isRegisterPage ||
               isForgotPasswordPage ||
-              isSplashPage)) {
+              isSplashPage ||
+              isWelcomePage)) {
         return '/dashboard';
       }
 
@@ -56,6 +61,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/splash',
         builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: '/welcome',
+        builder: (context, state) => const WelcomeScreen(),
       ),
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(
