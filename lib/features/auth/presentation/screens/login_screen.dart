@@ -66,7 +66,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     ref.listen<AuthState>(authNotifierProvider, (previous, next) {
       next.when(
         initial: () {
-          // Handle password reset success
           if (previous != null &&
               previous.maybeWhen(loading: () => true, orElse: () => false)) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -85,7 +84,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               backgroundColor: Colors.green,
             ),
           );
-          // Navigate based on user role
+
           if (user.role == UserRole.teacher) {
             Navigator.of(context).pushReplacementNamed('/teacher-dashboard');
           } else {
@@ -105,24 +104,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Form(
             key: _formKey,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 60),
-
-                // App Logo/Icon (Optional)
-                Icon(
-                  Icons.school,
-                  size: 80,
-                  color: Theme.of(context).primaryColor,
-                ),
-                const SizedBox(height: 24),
-
-                // Title
                 Text(
                   'Selamat Datang',
                   style: Theme.of(context).textTheme.displaySmall,
@@ -269,24 +258,25 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                OutlinedButton.icon(
+                OutlinedButton(
                   onPressed: authState.maybeWhen(
                     loading: () => null,
                     orElse: () => _handleGoogleSignIn,
                   ),
-                  icon: authState.maybeWhen(
-                    loading: () => const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                    orElse: () => Image.asset(
-                      'assets/images/google-logo.png',
-                      height: 18,
-                      width: 18,
-                    ),
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.network(
+                        'https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw',
+                        width: 18,
+                        height: 18,
+                        fit: BoxFit.cover,
+                      ),
+                      const SizedBox(width: 16),
+                      const Text('Masuk dengan Google'),
+                    ],
                   ),
-                  label: const Text('Masuk dengan Google'),
                 ),
                 const SizedBox(height: 16),
 
